@@ -1,0 +1,86 @@
+.my-box{
+    border:3px solid darkgray;
+    padding: 0px 29px 0px 46px;
+}
+
+.my-container a{
+    background-color:#E1F5FE;
+    color:black;
+}
+
+.my-container a:hover{
+    background-color: #E6EE9C;
+}
+
+.my-s-table th,td{
+    width: 220px;
+}
+
+.my-s-table tbody{
+    display: block;
+    overflow-x:scroll;
+    height: 460px !important;
+}
+
+.my-col-1{
+    border: 2px solid grey;
+    width: 370px;
+    margin-left: 14px;
+    height: 146px;
+    padding: 10px;
+}
+
+
+.my-btn{    
+    height: 47px;
+    margin-top: -19px;
+    margin-left: 242px;
+    width: 96px;
+}
+
+.my-btn:hover {background-color: #3e8e41}
+
+.my-btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.my-s-table tr:nth-child(even) {background-color: #B2DFDB;}
+.my-s-table tr:nth-child(odd) {background-color: #E0F7FA;}
+
+span.tab-space {padding-left:1em;}
+.my-space.tab-space {padding-left:2em; }
+
+.my-col-2{
+    border: 2px solid grey;
+    padding: 15px 0px 0px 9px;
+}
+
+.my-table-2 tr:nth-child(even) {background-color: #E0F7FA;}
+.my-table-2 tr:nth-child(odd) {background-color: #B2DFDB;}
+
+.my-table-2 th,td{
+    width: 220px;
+}
+
+.my-table-2 tbody{
+    display: block;
+    overflow-x:scroll;
+    height: 460px !important;
+}
+
+
+
+
+@media only screen and (min-width: 1460px){
+    .my-container{
+        margin-left:250px; 
+    }
+}
+
+@media only screen and (max-width: 1920px){
+    .my-container{
+        margin-left:210px; 
+    }
+}

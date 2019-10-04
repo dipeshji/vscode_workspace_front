@@ -1,0 +1,191 @@
+
+<div class="container bg-light w-50">
+  <div class="row pt-3">
+    <div class="col-sm">
+      <a href="#" data-toggle="tooltip" title="If Offline, manual subscription key generation process.
+If Online(Internet Required on Nav Adapter), automatic subscription key generation process."><i class="fa fa-info-circle" aria-hidden="true"></i> </a>
+      <span style="color: rgb(0, 0, 0); font-size: 2vw" > {{subscription_process}} &nbsp;</span>
+      <ui-switch (change)="onChange($event)" size="medium"></ui-switch>  
+    </div>
+  </div>
+  <br>
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <span class="input-group-text" id="basic-addon1"><b>IMO Number</b></span>
+    </div>
+    <input [disabled] = "vesseldisabled" type="number" class="form-control" placeholder="IMO Number" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="IMOnumber">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <span class="input-group-text" id="basic-addon1"><b>Vessel name</b></span>
+    </div>
+    <input [disabled] = "vesseldisabled" type="text" class="form-control" placeholder="Vessel name" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="vessel_name">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <span class="input-group-text" id="basic-addon1"><b>Vessel Email</b></span>
+    </div>
+    <input [disabled] = "emaildisabled" type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="vesselemail">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <div class="input-group-text"  ngbButtonLabel>
+        <span class="mr-2"><b>GPS</b></span>
+        <input [disabled]="GPSdisabled" type="checkbox" ngbButton [(ngModel)]="model.GPS" aria-label="Checkbox for following text input">
+      </div>
+    </div>
+    <input [disabled]="GPSsubdisabled" [(ngModel)] = "GPS_key" type="text" class="form-control" aria-label="Text input with checkbox" placeholder="GPS Subscription key">
+  </div>
+      
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <div class="input-group-text"  ngbButtonLabel>
+        <span class="mr-2"><b>Route</b></span>
+        <input [disabled] = "Routedisabled" type="checkbox" ngbButton [(ngModel)]="model.Route" aria-label="Checkbox for following text input">
+      </div>
+    </div>
+    <input [disabled] = "Routesubdisabled" [(ngModel)] = "Route_key" type="text" class="form-control" aria-label="Text input with radio button" placeholder="Route Subscription key">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <div class="input-group-text"  ngbButtonLabel>
+        <span class="mr-2"><b>AIS</b></span>
+        <input [disabled] = "AISdisabled" type="checkbox" ngbButton [(ngModel)]="model.AIS" aria-label="Checkbox for following text input">
+      </div>
+    </div>
+    <input [disabled] = "AISsubdisabled" [(ngModel)] = "AIS_key" type="text" class="form-control" aria-label="Text input with radio button" placeholder="AIS Subscription key">
+    </div>
+  <div class="row">
+    <div class="col">
+      <span style="font-size: 2.5vw" >Selected Service's</span>
+      <ul class="list-group">
+        <li style="color: black" class="list-group-item list-group-item-primary" *ngIf = "model.GPS==true"><span>GPS</span></li>
+        <li style="color: black" class="list-group-item list-group-item-primary" *ngIf = "model.Route==true"><span>Route</span></li>
+        <li style="color: black" class="list-group-item list-group-item-primary" *ngIf = "model.AIS==true"><span>AIS</span></li>
+      </ul>
+    </div>
+    <div class="col"> 
+      <span style="font-size: 2.5vw">Subscribed to</span>
+      <ul class="list-group">
+        <li *ngFor = "let service of subscribe_services" style="color: black; background-color: rgb(192, 240, 145);" class="list-group-item list-group-item-primary"><span>{{service}}</span></li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <flash-messages></flash-messages>
+  </div>
+  <div class="btn-group my-3" role="group">
+    <button [disabled] = "submitdisabled" type="button" class="btn btn-success mr-4" (click)="submit(content,subscriptionprocess)">Submit</button>
+    <button [disabled] = "subscribedisabled" type="button" class="btn btn-success mr-4" (click)="subscribe(failedsubscription,passedsubscription,jventurepassfail,already_subscribed)">Subscribe</button>
+  </div>
+  <div *ngIf = "spinner" class="spinner-border text-success" role="status">
+    <span class="sr-only">Please wait...</span>
+  </div>
+  <P *ngIf = "spinner">Please wait...</P>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" *ngIf = "successfull"><span style="color: lawngreen" >Information</span></h4>
+      <h4 class="modal-title" *ngIf = "!successfull"><span style="color: red" >Warning!</span></h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p style="color: lawngreen" *ngIf = "successfull">Successfully Submited, please check your email ({{vesselemail}}) for subscription key&hellip;</p>
+      <p style="color: red" *ngIf = "!successfull">Sorry something went wrong, please check your network connectivity and retry&hellip;</p>
+    </div>
+    <div  class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #failedsubscription let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title"><span style="color: brown" >Warning!</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: brown">Subscription failed for <b><u>{{fdata.failed_subscriptions}}</u></b>, <br> <span style="color: brown"> <br> possible causes maybe: <ul>
+            <li>Wrong subscription key.</li>
+            <li>Service not selected.</li>
+            <li>Key not entered.</li>
+          </ul>
+        Please have a look on this, and try again.</span></p>
+      </div>
+      <div  class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      </div>
+    </ng-template>
+
+    <ng-template #passedsubscription let-modal>
+      <div class="modal-header">
+          <h4 class="modal-title"><span style="color: lawngreen" >Information</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p style="color: lawngreen">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>.</p>
+      </div>
+      <div  class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      </div>
+    </ng-template>
+
+    <ng-template #jventurepassfail let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title"><span style="color: lawngreen" >Information</span></h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p style="color: lawngreen">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>,<br> <span style="color: brown">but subscription failed for <b><u>{{fdata.failed_subscriptions}}</u></b>, possible causes maybe: <ul>
+              <li>Wrong subscription key.</li>
+              <li>Service not selected.</li>
+              <li>Key not entered.</li>
+            </ul>
+          Please have a look on this, and try again.</span></p>
+        </div>
+        <div  class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </div>
+      </ng-template>
+
+
+
+      <ng-template #already_subscribed let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title"><span style="color: lawngreen" >Information</span></h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="color: lawngreen">You are already subscribed to {{pdata.already_subscribed}}.</p>
+        </div>
+        <div  class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </div>
+      </ng-template>
+
+      <ng-template #subscriptionprocess let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title"><span style="color: lawngreen" >Information</span></h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="color: lawngreen">You have received a file please mail it as an attachement to <span style="color: blue">iotnavidium@gmail.com</span></p>
+        </div>
+        <div  class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </div>
+      </ng-template>
+    <!--  <p style="color: lawngreen">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>.&hellip;</p> -->
+    

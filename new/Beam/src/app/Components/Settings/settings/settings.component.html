@@ -1,0 +1,52 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="container bg-light w-50" style="position: sticky">
+  <h1 style="font-size:3vw; font-weight: bold">Primary Details</h1>
+  <a routerLink = '/connection_settings' class="bootstrap-link connection_settings-link"><span class="c_settings">Connection Settings</span></a>
+  <br><br>
+  <form>
+    <div class="form-group row">
+      <label for="IMO" class="col-lg-3 col-form-label">IMO</label>
+      <div class="col-lg-9">
+        <input type="number" [(ngModel)] = IMO_number [ngModelOptions]="{standalone: true}" placeholder="IMO number">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="Vessel Name" class="col-lg-3  col-form-label">Vessel Name</label>
+      <div class="col-lg-9">
+        <input type="text" [(ngModel)] = Vessel_name [ngModelOptions]="{standalone: true}" placeholder="Vessel Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="ECDIS Type" class="col-lg-3 col-form-label">ECDIS Type</label>
+      <select style="box-sizing: border-box;" (change)="set_ecdis($event)" class="form-control col-lg-2  my-1 ml-2" id="ECDISType">
+        <option value="Furuno">Furuno(default)</option>
+        <option value="Transas">Transas</option>
+        <option value="Kelvin hughes">Kelvin hughes</option>
+        <option value="Tokyo keiki">Tokyo keiki</option>
+        <option value="Simrad">Simrad</option>
+      </select>
+    </div>
+
+    <div class="form-group row">
+      <label for="Retention Policy" class="col-lg-3 col-md-3 col-sm-2 col-form-label">Retention Policy</label>
+      <select style="box-sizing: border-box;" (change)="set_retention($event)" class="form-control col-lg-2  my-1 ml-2" id="retentionpolicy">
+        <option value="6 Months">6 Months(default)</option>
+        <option value="1 Year">1 Year</option>
+        <option value="2 Year">2 Year</option>
+      </select>
+    </div>
+
+  </form>
+  <div class="row justify-content-center">
+    <div class="col col-lg-5 col-md-5 col-sm-4 col-xs-1">
+      <button  (click)="on_submit()" type="button" class="btn btn-dark btn-md col-lg-4 col-md-6 col-sm-4 my-5 col-xs-1">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="flash">
+  <flash-messages></flash-messages>
+</div>

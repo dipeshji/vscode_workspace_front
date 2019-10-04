@@ -1,0 +1,41 @@
+
+<nav class="navbar bg-light navbar-expand-lg navbar-fixed-top">
+  <span class="mx-auto" style="font-size:4vw"><b>BEAM v1.0</b></span>
+  <div class="mr-4 bg-success">
+    <li class="nav-item dropdown " style="list-style:none">
+      <a class="text-light nav-link dropdown-toggle my-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+        Menu
+      </a>
+        <div class="dropdown-menu dropdown-menu-left bg-success" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink='/subscribe'><b>Subscribe</b></a>
+          <a class="dropdown-item" routerLink='/home'><b>Home</b></a>
+          <a class="dropdown-item" routerLink="/setting"><b>Settings</b></a>
+          <a class="dropdown-item" routerLink="/positions"><b>Positions</b></a>
+          <a class="dropdown-item" routerLink="/current"><b>Current Route</b></a>
+        </div>
+    </li>
+  </div>
+</nav>
+
+<nav class="navbar navbar-inverse navbar-fixed-left w-100" style="position: sticky"> 
+
+  <ul class="nav navbar-nav" id="nav2">
+    <li routerLinkActive="active-link" class="nav-item">
+      <a class="nav-link" routerLink='/subscribe'><b>Subscribe</b></a>
+    </li>
+    <li routerLinkActive="active-link" class="nav-item">
+      <a class="nav-link" routerLink='/home'><b>Home</b></a>
+    </li>
+    <li routerLinkActive="active-link" class="nav-item">
+      <a class="nav-link" routerLink="/setting"><b>Settings</b></a>
+    </li>
+    <li routerLinkActive="active-link" class="nav-item">
+      <a class="nav-link" routerLink="/positions"><b>Positions</b></a>
+    </li>
+    <li routerLinkActive="active-link" class="nav-item">
+        <a class="nav-link" routerLink="/current"><b>Current Route</b></a>
+    </li>
+  </ul>
+</nav>
+  <router-outlet></router-outlet>
+

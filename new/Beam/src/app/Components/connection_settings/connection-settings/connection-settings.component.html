@@ -1,0 +1,13 @@
+<div class="container bg-light w-50">
+  <h1 style="font-size:3vw; font-weight: bold">Connection Settings</h1>
+  <h3 style="font-size: 2vw">Communication Protocol:</h3>
+  <div class="input-group mb-3">
+    <div class="input-group">
+      <div class="input-group-text"  ngbButtonLabel>
+        <span class="mr-2"><b>TCP Stream</b></span>
+        <input type="checkbox" ngbButton [(ngModel)]="model.GPS" aria-label="Checkbox for following text input">
+      </div>
+    </div>
+    <input [disabled]="GPSsubdisabled" [(ngModel)] = "GPS_key" type="text" class="form-control" aria-label="Text input with checkbox" placeholder="GPS Subscription key">
+  </div>
+</div>

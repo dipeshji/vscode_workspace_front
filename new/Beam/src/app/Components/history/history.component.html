@@ -1,0 +1,127 @@
+<div class="container bg-light my-container w-100 p-100">
+    <a href="current" class="bootstrap-link current-link" style="font-size:xx-large"><b>Current Route</b></a>
+    &nbsp;&nbsp;
+    <a href="history" class="bootstrap-link history-link" style="font-size:xx-large"><b>History</b></a>
+    
+  <div class="row my-box-1">
+    <div class="col my-col-1">
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">From</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="yyyy-mm-dd" [(ngModel)] = from_date>
+        <div class="input-group input-group-sm mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">To</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="yyyy-mm-dd" [(ngModel)] = to_date>
+        </div>
+      </div>
+    <button type="button" class="btn btn-primary btn-sm my-btn" (click)="search()">Search</button>
+    </div>
+    <div class="col-8 my-col-2">
+      <b>Index:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.index}}</span> <span class="tab-space"></span> <b>File Name:</b>&nbsp;<span style="color:rgb(0, 38, 255); font-size:20px">{{routefile.filename}}</span><span class="tab-space"></span> <b>Date Time:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.timsestamp}}</span><br><br>
+      <b>Source Port:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.source}}</span><span class="tab-space my-space"></span><b>Destination Port:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.destination}}</span><span class="tab-space my-space"></span><b>Total Distance(nm):</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">null</span>
+    </div>
+  </div>
+  <div class="flash">
+    <flash-messages></flash-messages>
+  </div>
+</div>
+
+<div class="container bg-light mt-4 mr-5 w-100 p-100">
+  <div class="row">
+    <div class="col-4">
+      <div class="table table-hover overflow-scroll mt-4 my-s-table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"><b>#</b></th>
+            <th scope="col"><b>File name</b></th>
+            <th scope="col"><b>Date Time</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let element of history_data; let i = index">
+            <th scope="row" (click)="onclick(i)">{{i+1}}</th>
+            <td (click)="onclick(i)">{{element.Filename}}</td>
+            <td (click)="onclick(i)">{{element.TimeStamp}}</td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+    <div class="col">
+      <div class="table table-stripped table-hover ml-auto mt-4 my-table-2">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">WP Name</th>
+            <th scope="col">Lat</th>
+            <th scope="col">Long</th>
+            <th scope="col">Speed</th>
+            <th scope="col">Heading</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let element of showdata; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{element.WPName}}</td>
+            <td>{{element.Lat}}</td>
+            <td>{{element.Lon}}</td>
+            <td>{{element.Speed}}</td>
+            <td>{{element.Heading}}</td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- <div class="row">
+      <div class="col-2">
+        <div class="table table-hover overflow-scroll my-s-table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col"><b>#</b></th>
+              <th scope="col"><b>File name</b></th>
+              <th scope="col"><b>Date Time</b></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let element of history_data; let i = index">
+              <th scope="row" (click)="onclick(i)">{{i+1}}</th>
+              <td (click)="onclick(i)">{{element.Filename}}</td>
+              <td (click)="onclick(i)">{{element.TimeStamp}}</td>
+            </tr>
+          </tbody>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="table table-md table-stripped table-hover ml-auto table-responsive mt-4 my-table-2">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">WP Name</th>
+              <th scope="col">Lat</th>
+              <th scope="col">Long</th>
+              <th scope="col">Speed</th>
+              <th scope="col">Heading</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let element of showdata; let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{element.WPName}}</td>
+              <td>{{element.Lat}}</td>
+              <td>{{element.Lon}}</td>
+              <td>null</td>
+              <td>null</td>
+            </tr>
+          </tbody>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flash">
+    <flash-messages></flash-messages>
+  </div> -->

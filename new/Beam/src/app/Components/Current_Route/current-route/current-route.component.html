@@ -1,0 +1,96 @@
+<div class="container bg-light  mr-5 w-75 main-container" style="position:relative">
+    <a routerLink="/current" class="bootstrap-link current-link" style="font-size:2vw"><b>Current Route</b></a>
+    &nbsp;&nbsp;
+    <a routerLink="/history" class="bootstrap-link history-link" style="font-size:2vw"><b>History</b></a>
+  <div class="row">
+    <div class="col col-lg-12 col-md-8 col-sm-4  my-col-1">
+      <b>Index:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.index}}</span> <span class="tab-space"></span> <b>File Name:</b>&nbsp;<span style="color:rgb(0, 38, 255); font-size:20px">{{routefile.filename}}</span><span class="tab-space"></span> <b>Date Time:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.timsestamp}}</span><br><br>
+      <b>Source Port:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.source}}</span><span class="tab-space my-space"></span><b>Destination Port:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.destination}}</span><span class="tab-space my-space"></span><b>Total Distance(nm):</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.distance}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="container bg-light mr-5 w-75 mt-5">
+  <div class="table table-stripped table-hover route-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">WP Name</th>
+        <th scope="col">Lat</th>
+        <th scope="col">Long</th>
+        <th scope="col">Speed</th>
+        <th scope="col">Heading</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let element of routedata; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{element.WPName}}</td>
+        <td>{{element.Lat}}</td>
+        <td>{{element.Lon}}</td>
+        <td>{{element.Speed}}</td>
+        <td>{{element.Heading}}</td>
+      </tr>
+    </tbody>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container bg-light mr-5 my-container">
+  <a routerLink="/current" class="bootstrap-link current-link" style="font-size:2vw"><b>Current Route</b></a>
+  &nbsp;&nbsp;
+  <a routerLink="/history" class="bootstrap-link history-link" style="font-size:2vw"><b>History</b></a>
+
+  <div class="row my-box">
+    <div class="col-lg-10 col-md-7 col-sm-6 col d-block m-auto box-inside">
+        <b>Index:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.index}}</span> <span class="tab-space"></span> <b>File Name:</b>&nbsp;<span style="color:rgb(0, 38, 255); font-size:20px">{{routefile.filename}}</span><span class="tab-space"></span> <b>Date Time:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.timsestamp}}</span><br><br>
+        <b>Source Port:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.source}}</span><span class="tab-space my-space"></span><b>Destination Port:</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">{{routefile.destination}}</span><span class="tab-space my-space"></span><b>Total Distance(nm):</b>&nbsp;<span style="color:rgb(0, 38, 255);font-size:20px">null</span>
+    </div>
+  </div>
+  <div class="table table-hover my-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col"><b>WP Name</b></th>
+        <th scope="col"><b>Lat</b></th>
+        <th scope="col"><b>Long</b></th>
+        <th scope="col"><b>Speed</b></th>
+        <th scope="col"><b>Heading</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let element of routedata; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{element.WPName}}</td>
+        <td>{{element.Lat}}</td>
+        <td>{{element.Lon}}</td>
+        <td>null</td>
+        <td>null</td>
+      </tr>
+    </tbody>
+  </div>
+</div>
+   -->
+
+   <!-- <ag-grid-angular 
+    style="width: 100%; height: 500px;" 
+    class="ag-theme-balham"
+    [rowData]="row" 
+    [columnDefs]="coloumn">
+  </ag-grid-angular> -->

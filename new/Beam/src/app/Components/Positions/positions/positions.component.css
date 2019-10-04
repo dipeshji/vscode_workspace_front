@@ -1,0 +1,23 @@
+
+.my-flex-container{
+  box-sizing: border-box;  
+  border: 4px solid blue;
+  height: 270px;
+  overflow-y: auto;
+  }
+
+.table th,td{
+    width: 150px;
+}
+
+
+.table tbody{
+    display: block;
+    overflow-x:scroll;
+    height: 460px !important;
+}
+
+  .table tr:nth-child(even){background-color: #E0F7FA;}
+  .table tr:nth-child(odd){background-color: #B2DFDB;}
+  
+  
