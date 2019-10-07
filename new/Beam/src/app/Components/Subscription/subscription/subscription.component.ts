@@ -82,14 +82,27 @@ subscription_process:String = "Offline"
     Route: false,
     AIS: false
   };
+
+  validation_check(){
+    let NoService = this.model.GPS || this.model.Route || this.model.AIS ? true : false
+    if(this.vesselemail !== null && this.vessel_name !== null && this.IMOnumber !== null){
+      if(NoService)
+        return {"status":true,"service":true}
+      else
+        return {"status":true,"service":false}
+    }else{
+      if(NoService)
+        return {"status":false,"service":true}
+      else
+        return {"status":false,"service":false}
+    }
+  }
+
 //========================SUBMIT START=============================
   submit(content,subscriptionprocess){  
-    // this.pop.open(subscriptionprocess, {ariaLabelledBy: 'modal-basic-title'})
    if(this.subscription_process === "Online"){
-    let NoService = this.model.GPS || this.model.Route || this.model.AIS ? true : false
-    if(this.vesselemail !== null && this.vessel_name !== null && this.IMOnumber !== null && NoService){
+    if(this.validation_check().status){
       this.spinner = true
-      // this.pop.open(content, {ariaLabelledBy: 'modal-basic-title'})
       if(this.model.GPS === true)
       this.sub_services.push("GPS")
       if(this.model.Route === true)
@@ -229,56 +242,54 @@ subscription_process:String = "Offline"
           }
         })
       }
-      
-    }
-    else if(this.vesselemail === null && this.vessel_name === null && this.IMOnumber ===null){
-      this.message.show("vessel email, Vessel name and IMO Number is required, please provide your vessel email, Vessel name and IMO Number.",{cssClass:"alert-warning",timeout:7000})
-    }
-    else if(this.vessel_name === null){
-      this.message.show("Vessel name is required, please provide Vessel name.",{cssClass:"alert-warning",timeout:3000})
-    }
-    else if(this.vesselemail === null){
-      this.message.show("Your vessel email is required, please provide your vesselemail.",{cssClass:"alert-warning",timeout:3000})
-    }else if(this.IMOnumber === null){
-      this.message.show("IMO Number is required, please provide IMO Number.",{cssClass:"alert-warning",timeout:3000})
     }else{
-      this.message.show("No service Selected, please select any service.",{cssClass:"alert-warning",timeout:3000})
+      if(!this.validation_check().status)
+        this.message.show("IMO Number, Vessel Name and Vessel Email are required! Please provide required fields.",{cssClass:"alert-warning",timeout:6000})
+      if(!this.validation_check().service)
+        this.message.show("No service selected! please select services you want.",{cssClass:"alert-warning",timeout:6000})
     }
   }else{
-    if(this.model.GPS === true)
-      this.sub_services.push("GPS")
-    if(this.model.Route === true)
-      this.sub_services.push("Route")
-    if(this.model.AIS === true)
-      this.sub_services.push("AIS")
-    let send_data = {
-      vesselemail:this.vesselemail,
-      vessel_name:this.vessel_name,
-      servicename1:this.sub_services[0],
-      servicename2:this.sub_services[1],
-      servicename3:this.sub_services[2],
-      subscription_process:this.subscription_process,
-      IMOnumber : this.IMOnumber
-    }
+    if(this.validation_check().status && this.validation_check().service){
+      if(this.model.GPS === true)
+        this.sub_services.push("GPS")
+      if(this.model.Route === true)
+        this.sub_services.push("Route")
+      if(this.model.AIS === true)
+        this.sub_services.push("AIS")
+      let send_data = {
+        vesselemail:this.vesselemail,
+        vessel_name:this.vessel_name,
+        servicename1:this.sub_services[0],
+        servicename2:this.sub_services[1],
+        servicename3:this.sub_services[2],
+        subscription_process:this.subscription_process,
+        IMOnumber : this.IMOnumber
+      }
     // console.table(send_data)
-    this.pop.open(subscriptionprocess, {ariaLabelledBy: 'modal-basic-title'})
-      this.Subscribe.set_offline_services(send_data)
-        .pipe(takeUntil(this.unsubscribe))
-        .subscribe((resp: HttpResponse<Blob>) => {
-          this.GPSsubdisabled = false
-          this.Routesubdisabled = false
-          this.subscribedisabled = false
-          let respheader = resp.headers.get('Content-Disposition')
-          let filename = respheader
-          .split(';')[1]
-          .split('filename')[1]
-          .split('=')[1]
-          .split('/')
-          .reverse()[0];
-          saveAs(resp.body,filename)
-        })
-    }
+      this.pop.open(subscriptionprocess, {ariaLabelledBy: 'modal-basic-title'})
+        this.Subscribe.set_offline_services(send_data)
+         .pipe(takeUntil(this.unsubscribe))
+          .subscribe((resp: HttpResponse<Blob>) => {
+            this.GPSsubdisabled = false
+            this.Routesubdisabled = false
+            this.subscribedisabled = false
+            let respheader = resp.headers.get('Content-Disposition')
+            let filename = respheader
+            .split(';')[1]
+            .split('filename')[1]
+            .split('=')[1]
+            .split('/')
+            .reverse()[0];
+            saveAs(resp.body,filename)
+          })
+      }else{
+        if(!this.validation_check().status)
+          this.message.show("IMO Number, Vessel Name and Vessel Email are required! Please provide required fields.",{cssClass:"alert-warning",timeout:6000})
+        if(!this.validation_check().service)
+          this.message.show("No service selected! please select services you want.",{cssClass:"alert-warning",timeout:6000})
+      }
   }
+}
 //========================SUBMIT END=============================
 
 //========================SUBSCRIBE START========================
@@ -294,9 +305,6 @@ subscription_process:String = "Offline"
     this.Subscribe.subscription_check(send_keys)
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(data => {
-      console.log(data);
-      
-//=============================================================================================== 
       if(data.passed_subscriptions.length && data.failed_subscriptions.length){
         this.pdata = data
         this.fdata = data
@@ -353,7 +361,6 @@ subscription_process:String = "Offline"
         this.vesselemaildisabled = false
         this.vesseldisabled = false
       }
-// ==================================================================================================
       else if(data.passed_subscriptions.length>=1)
       {
         this.pdata = data
@@ -411,8 +418,7 @@ subscription_process:String = "Offline"
             }
           })
         }
-      }
-//=================================================================================== 
+      } 
       else if(data.already_subscribed.length >= 1)
       {
       this.pdata = data

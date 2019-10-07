@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const subscription = require('../model/subscribe')
 const path = require('path')
+const fs = require('fs')
 
 
 
@@ -26,12 +27,12 @@ router.post('/submit',(req,res)=>{
         })
     }else{
         require('getmac').getMac({iface: 'enp2s0'},(err,macAddress)=>{
-            subscription.manual_subscription(req.body,macAddress,(status,filename)=>{
-                console.log("filename = " + filename);
+            subscription.manual_subscription(req.body,macAddress,(filename)=>{
                 res.setHeader("Content-Disposition","attachment; filename=" + filename)
-                filename = path.join(filename, "../")
+                filename = path.join(__dirname, "../" + filename)
                 res.sendFile(filename,(err)=>{
                     if(err) console.error(err + "File not sent")
+                    else fs.unlinkSync(filename)
                 })
             })
         })
