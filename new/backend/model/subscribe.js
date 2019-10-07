@@ -172,8 +172,8 @@ module.exports.manual_subscription = (body,macAddress,callback) => {
         IMO_number:body.IMOnumber
     }
     let filename = body.IMOnumber + " " + new Date() + ".enc";  
-    console.log(filename);
+    // console.log(filename);
     encrypt_data({data:JSON.stringify(data), password:"$navi@navi*navi#navi%navi&navi",filename:filename})
-    callback(true,filename)
+    callback(filename.toString)
 }
 // ===========================manuall subscription end===============
