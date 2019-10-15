@@ -17,6 +17,7 @@ export class SubscriptionComponent implements OnInit, OnDestroy {
 private unsubscribe: Subject<boolean> = new Subject();
 vesselemail:String = null
 IMOnumber:number = null
+IMOnumberdisabled = false
 successfull:boolean = false
 spinner:boolean = false
 GPS_key:String = null
@@ -30,7 +31,7 @@ Routesubdisabled:boolean = true
 AISdisabled:boolean = false
 AISsubdisabled:boolean = true
 vesselemaildisabled:boolean = false
-vesseldisabled:boolean = false
+vesselnamedisabled:boolean = false
 submitdisabled:boolean = false
 subscribedisabled:boolean = true
 subscribe_services:any
@@ -50,7 +51,7 @@ subscription_process:String = "Offline"
       if(data.subscribed_services.length === 3){
         this.submitdisabled = true
         this.vesselemaildisabled = true
-        this.vesseldisabled = true
+        this.vesselnamedisabled = true
       }
       data.subscribed_services.forEach(service => {
         if(service === "GPS"){
@@ -101,7 +102,7 @@ subscription_process:String = "Offline"
 //========================SUBMIT START=============================
   submit(content,subscriptionprocess){  
    if(this.subscription_process === "Online"){
-    if(this.validation_check().status){
+    if(this.validation_check().status && this.validation_check().service){
       this.spinner = true
       if(this.model.GPS === true)
       this.sub_services.push("GPS")
@@ -130,7 +131,7 @@ subscription_process:String = "Offline"
             this.spinner = false
             this.pop.open(content, {ariaLabelledBy: 'modal-basic-title'})
             this.vesselemaildisabled = true
-            this.vesseldisabled = true
+            this.vesselnamedisabled = true
             this.submitdisabled = true
             this.subscribedisabled = false
             this.GPSdisabled = true
@@ -175,7 +176,7 @@ subscription_process:String = "Offline"
             this.spinner = false
             this.pop.open(content, {ariaLabelledBy: 'modal-basic-title'})
             this.vesselemaildisabled = true
-            this.vesseldisabled = true
+            this.vesselnamedisabled = true
             this.submitdisabled = true
             this.subscribedisabled = false
             this.GPSdisabled = true
@@ -219,7 +220,8 @@ subscription_process:String = "Offline"
             this.spinner = false
             this.pop.open(content, {ariaLabelledBy: 'modal-basic-title'})
             this.vesselemaildisabled = true
-            this.vesseldisabled = true
+            this.vesselnamedisabled = true
+            this.IMOnumberdisabled = true
             this.submitdisabled = true
             this.subscribedisabled = false
             this.GPSdisabled = true
@@ -245,16 +247,22 @@ subscription_process:String = "Offline"
     }else{
       if(!this.validation_check().status)
         this.message.show("IMO Number, Vessel Name and Vessel Email are required! Please provide required fields.",{cssClass:"alert-warning",timeout:6000})
-      if(!this.validation_check().service)
+      if(!this.validation_check().service && this.validation_check().status)
         this.message.show("No service selected! please select services you want.",{cssClass:"alert-warning",timeout:6000})
     }
   }else{
     if(this.validation_check().status && this.validation_check().service){
-      if(this.model.GPS === true)
+      this.spinner = true
+      this.vesselemaildisabled = true
+      this.IMOnumberdisabled = true
+      this.vesselnamedisabled = true
+      this.submitdisabled = true
+
+      if(this.model.GPS)
         this.sub_services.push("GPS")
-      if(this.model.Route === true)
+      if(this.model.Route)
         this.sub_services.push("Route")
-      if(this.model.AIS === true)
+      if(this.model.AIS)
         this.sub_services.push("AIS")
       let send_data = {
         vesselemail:this.vesselemail,
@@ -270,9 +278,18 @@ subscription_process:String = "Offline"
         this.Subscribe.set_offline_services(send_data)
          .pipe(takeUntil(this.unsubscribe))
           .subscribe((resp: HttpResponse<Blob>) => {
-            this.GPSsubdisabled = false
-            this.Routesubdisabled = false
+            this.spinner = false
+            this.GPSdisabled = true
+            this.Routedisabled = true
+            this.AISdisabled = true
             this.subscribedisabled = false
+            if(this.model.GPS)
+              this.GPSsubdisabled = false
+            if(this.model.Route)
+              this.Routesubdisabled = false
+            if(this.model.AIS)
+              this.AISsubdisabled = false
+              
             let respheader = resp.headers.get('Content-Disposition')
             let filename = respheader
             .split(';')[1]
@@ -285,7 +302,7 @@ subscription_process:String = "Offline"
       }else{
         if(!this.validation_check().status)
           this.message.show("IMO Number, Vessel Name and Vessel Email are required! Please provide required fields.",{cssClass:"alert-warning",timeout:6000})
-        if(!this.validation_check().service)
+        if(!this.validation_check().service && this.validation_check().status)
           this.message.show("No service selected! please select services you want.",{cssClass:"alert-warning",timeout:6000})
       }
   }
@@ -358,16 +375,12 @@ subscription_process:String = "Offline"
             this.model.AIS = false
           }
         })
-        this.vesselemaildisabled = false
-        this.vesseldisabled = false
       }
       else if(data.passed_subscriptions.length>=1)
       {
         this.pdata = data
         this.pop.open(content_passed, {ariaLabelledBy: 'modal-basic-title'})
         this.spinner = false
-        this.vesselemaildisabled = false
-        this.vesseldisabled = false
         this.subscribedisabled = true
         this.submitdisabled = false
 
@@ -428,10 +441,8 @@ subscription_process:String = "Offline"
         this.pdata = data
         this.pop.open(content_passed, {ariaLabelledBy: 'modal-basic-title'})
         this.spinner = false
-        this.vesselemaildisabled = false
-        this.vesseldisabled = false
-        this.subscribedisabled = true
-        this.submitdisabled = false
+        this.subscribedisabled = false
+        this.submitdisabled = true
 
         if(!this.model.GPS){
           this.GPSdisabled = false

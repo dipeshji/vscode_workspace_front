@@ -66,7 +66,6 @@ module.exports.validation = (body,macAddress,callback)=>{
     Object.entries(body).forEach(entry => {
         let service = entry[0];
         let sub_key = entry[1];
-        // console.log(service + ":" + sub_key);
         if(sub_key !== null){
             let password = service+macAddress
             let hash = crypto.createHash('sha256')

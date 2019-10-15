@@ -13,19 +13,19 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
     <div class="input-group">
       <span class="input-group-text" id="basic-addon1"><b>IMO Number</b></span>
     </div>
-    <input [disabled] = "vesseldisabled" type="number" class="form-control" placeholder="IMO Number" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="IMOnumber">
+    <input [disabled] = "IMOnumberdisabled" type="number" class="form-control" placeholder="IMO Number" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="IMOnumber">
   </div>
   <div class="input-group mb-3">
     <div class="input-group">
       <span class="input-group-text" id="basic-addon1"><b>Vessel name</b></span>
     </div>
-    <input [disabled] = "vesseldisabled" type="text" class="form-control" placeholder="Vessel name" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="vessel_name">
+    <input [disabled] = "vesselnamedisabled" type="text" class="form-control" placeholder="Vessel name" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="vessel_name">
   </div>
   <div class="input-group mb-3">
     <div class="input-group">
       <span class="input-group-text" id="basic-addon1"><b>Vessel Email</b></span>
     </div>
-    <input [disabled] = "emaildisabled" type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="vesselemail">
+    <input [disabled] = "vesselemaildisabled" type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="vesselemail">
   </div>
   <div class="input-group mb-3">
     <div class="input-group">
@@ -93,8 +93,8 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
       </button>
     </div>
     <div class="modal-body">
-      <p style="color: lawngreen" *ngIf = "successfull">Successfully Submited, please check your email ({{vesselemail}}) for subscription key&hellip;</p>
-      <p style="color: red" *ngIf = "!successfull">Sorry something went wrong, please check your network connectivity and retry&hellip;</p>
+      <p style="color: black" *ngIf = "successfull">Successfully Submited, please check your email ({{vesselemail}}) for subscription key&hellip;</p>
+      <p style="color: black" *ngIf = "!successfull">Sorry something went wrong, please check your network connectivity and retry&hellip;</p>
     </div>
     <div  class="modal-footer">
       <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
@@ -103,13 +103,13 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
 
   <ng-template #failedsubscription let-modal>
       <div class="modal-header">
-        <h4 class="modal-title"><span style="color: brown" >Warning!</span></h4>
+        <h4 class="modal-title"><span style="color: red" >Warning!</span></h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p style="color: brown">Subscription failed for <b><u>{{fdata.failed_subscriptions}}</u></b>, <br> <span style="color: brown"> <br> possible causes maybe: <ul>
+        <p style="color: black">Subscription failed for <b><u>{{fdata.failed_subscriptions}}</u></b>, <br> <span style="color: brown"> <br> possible causes maybe: <ul>
             <li>Wrong subscription key.</li>
             <li>Service not selected.</li>
             <li>Key not entered.</li>
@@ -129,7 +129,7 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
         </button>
       </div>
       <div class="modal-body">
-          <p style="color: lawngreen">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>.</p>
+          <p style="color: black">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>.</p>
       </div>
       <div  class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
@@ -144,7 +144,7 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
           </button>
         </div>
         <div class="modal-body">
-            <p style="color: lawngreen">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>,<br> <span style="color: brown">but subscription failed for <b><u>{{fdata.failed_subscriptions}}</u></b>, possible causes maybe: <ul>
+            <p style="color: black">Congratulations!! you are subscribed to <b><u>{{pdata.passed_subscriptions}}</u></b>,<br> <span style="color: brown">but subscription failed for <b><u>{{fdata.failed_subscriptions}}</u></b>, possible causes maybe: <ul>
               <li>Wrong subscription key.</li>
               <li>Service not selected.</li>
               <li>Key not entered.</li>
@@ -166,7 +166,7 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
           </button>
         </div>
         <div class="modal-body">
-          <p style="color: lawngreen">You are already subscribed to {{pdata.already_subscribed}}.</p>
+          <p style="color: black">You are already subscribed to {{pdata.already_subscribed}}.</p>
         </div>
         <div  class="modal-footer">
           <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
@@ -181,7 +181,7 @@ If Online(Internet Required on Nav Adapter), automatic subscription key generati
           </button>
         </div>
         <div class="modal-body">
-          <p style="color: lawngreen">You have received a file please mail it as an attachement to <span style="color: blue">iotnavidium@gmail.com</span></p>
+          <p style="color: black">You have received a file please mail it as an attachement to <span style="color: blue">iotnavidium@gmail.com</span></p>
         </div>
         <div  class="modal-footer">
           <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
