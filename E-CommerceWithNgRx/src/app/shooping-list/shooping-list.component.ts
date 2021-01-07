@@ -3,7 +3,8 @@ import { Store } from "@ngrx/store";
 import { Observable, Subscription } from "rxjs";
 import { ingredient } from "../Shared/Ingredint.model";
 import { ShoppingListService } from "./shopping-list.service";
-import * as fromShoppingList from "./store/shopping-list.reducer";
+import * as shoppingListActions from "./store/shopping-list.actions";
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: "app-shooping-list",
@@ -16,7 +17,7 @@ export class ShoopingListComponent implements OnInit, OnDestroy {
 
   constructor(
     private slService: ShoppingListService,
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
   ) {}
   // { ingredients: ingredient[] } data format of store. This mean we have an object with ingredients which is of type ingredient array
   ngOnInit(): void {
@@ -30,7 +31,8 @@ export class ShoopingListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(index: number) {
-    this.slService.editStarted.next(index);
+    // this.slService.editStarted.next(index);
+    this.store.dispatch(new shoppingListActions.StartEdit(index));
   }
 
   ngOnDestroy() {
